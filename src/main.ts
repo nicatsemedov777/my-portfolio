@@ -33,7 +33,7 @@ interface Education {
 const portfolioData = {
   name: "Nicat Samadov",
   role: "Backend Developer (Java & Spring)",
-  experience: "2+ Years including Professional & Internship work",
+  yearsOfExperience: "2+ Years including Professional & Internship work",
   location: "Baku, Azerbaijan",
   summary: "I am a Backend Developer specializing in Java and Spring Boot, with experience in building scalable, secure, and high-performance backend systems. I focus on clean architecture, database design, microservices, and cloud-based solutions. I enjoy solving complex technical problems, optimizing system performance, and delivering reliable software products.",
   
@@ -245,7 +245,7 @@ function createHeroSection() {
         <h1 class="hero-name">${portfolioData.name}</h1>
         <h2 class="hero-role">${portfolioData.role}</h2>
         <p class="hero-location">📍 ${portfolioData.location}</p>
-        <p class="hero-experience">${portfolioData.experience}</p>
+        <p class="hero-experience">${portfolioData.yearsOfExperience}</p>
         <div class="hero-cta">
           <a href="#contact" class="btn btn-primary">Get in Touch</a>
           <a href="#projects" class="btn btn-secondary">View Projects</a>
@@ -469,15 +469,18 @@ function initApp() {
   `;
 
   // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e: Event) => {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href')!);
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+      const href = anchor.getAttribute('href');
+      if (href) {
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
       }
     });
   });
@@ -500,7 +503,6 @@ function initApp() {
   });
 
   // Add scroll effect to navbar
-  let lastScroll = 0;
   window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     const currentScroll = window.pageYOffset;
@@ -510,8 +512,6 @@ function initApp() {
     } else {
       navbar?.classList.remove('scrolled');
     }
-    
-    lastScroll = currentScroll;
   });
 }
 
