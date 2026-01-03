@@ -513,6 +513,37 @@ function initApp() {
       navbar?.classList.remove('scrolled');
     }
   });
+
+  // Scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe all sections and cards
+  const animatedElements = document.querySelectorAll('.section, .tech-category, .project-card, .experience-card, .education-card, .training-card');
+  animatedElements.forEach(el => {
+    el.classList.add('fade-in');
+    observer.observe(el);
+  });
+
+  // Add parallax effect to hero
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    const scrolled = window.pageYOffset;
+    if (hero && scrolled < window.innerHeight) {
+      (hero as HTMLElement).style.transform = `translateY(${scrolled * 0.5}px)`;
+      (hero as HTMLElement).style.opacity = `${1 - scrolled / window.innerHeight}`;
+    }
+  });
 }
 
 // Initialize the app when DOM is ready
